@@ -1,0 +1,10 @@
+pyog package
+============
+
+pyog.dit module
+---------------
+
+.. automodule:: pyog.dit
+    :members:
+    :undoc-members:
+    :show-inheritance:

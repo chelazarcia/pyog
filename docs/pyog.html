@@ -1,0 +1,678 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pyog package &#8212; pyog  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pyog  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pyog-package">
+<h1>pyog package<a class="headerlink" href="#pyog-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyog.dit">
+<span id="pyog-dit-module"></span><h2>pyog.dit module<a class="headerlink" href="#module-pyog.dit" title="Permalink to this headline">¶</a></h2>
+<p>dit.py</p>
+<p>Python interface for Lenel OnGuard DataConduIT API. Prepare to catch COMError and
+DITError. Based on Python wmi library (<a class="reference external" href="https://pypi.org/project/WMI/">https://pypi.org/project/WMI/</a>) slightly modified (pyog._wmii).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyog</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dit</span> <span class="o">=</span> <span class="n">pyog</span><span class="o">.</span><span class="n">DIT</span><span class="p">(</span><span class="n">server</span><span class="o">=</span><span class="s1">&#39;ms5&#39;</span><span class="p">)</span>  <span class="c1"># Connect to DataConduIT host</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dit</span><span class="o">.</span><span class="n">data_query</span><span class="p">(</span><span class="s1">&#39;select LASTNAME, FIRSTNAME, SSNO from Lnl_Cardholder where ZIP is NULL&#39;</span><span class="p">)</span>
+<span class="go">[(&#39;Lake&#39;, &#39;Lisa&#39;, &#39;234&#39;), (&#39;Gorvachev&#39;, &#39;Mikhail&#39;, None), (&#39;Carlitos&#39;, &#39;Muñoz&#39;, &#39;456&#39;),</span>
+<span class="go">(&#39;Carr&#39;, &#39;Brian&#39;, None), (&#39;Ehud&#39;, &#39;Barak&#39;, None), (&#39;Marchetti&#39;, &#39;Thomas&#39;, None),</span>
+<span class="go">(&#39;Streuben&#39;, &#39;Lisa&#39;, None), (&#39;Taksh&#39;, &#39;Mastpur&#39;, None), (&#39;Twain&#39;, &#39;Mark&#39;, None)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lisa</span> <span class="o">=</span> <span class="n">dit</span><span class="o">.</span><span class="n">data_query</span><span class="p">(</span><span class="s1">&#39;select * from Lnl_Cardholder where ID=1&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lisa</span><span class="o">.</span><span class="n">LASTNAME</span>
+<span class="go">&#39;Lake&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lisa</span><span class="o">.</span><span class="n">CITY</span>
+<span class="go">&#39;Rome&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lisa</span><span class="o">.</span><span class="n">CITY</span> <span class="o">=</span> <span class="s1">&#39;Rochester&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lisa</span><span class="o">.</span><span class="n">CITY</span>
+<span class="go">&#39;Rochester&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dit</span><span class="o">.</span><span class="n">send_event</span><span class="p">(</span><span class="s1">&#39;Time Lapse&#39;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s1">&#39;Quantum Panel&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dit</span><span class="o">.</span><span class="n">open_door</span><span class="p">(</span><span class="n">panel</span><span class="o">=</span><span class="s1">&#39;3300&#39;</span><span class="p">,</span> <span class="n">reader</span><span class="o">=</span><span class="s1">&#39;CK&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">access_watcher</span> <span class="o">=</span> <span class="n">dit</span><span class="o">.</span><span class="n">hardware_events</span><span class="p">(</span><span class="n">pyog</span><span class="o">.</span><span class="n">HWAccessEvent</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">event</span> <span class="o">=</span> <span class="n">access_watcher</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">{&#39;AccessResult&#39;: 2, &#39;Alarm&#39;: {&#39;Description&#39;: &#39;Granted Access&#39;, &#39;EventParamDescription&#39;:</span>
+<span class="go">&#39;&#39;, &#39;ID&#39;: 1, &#39;IsActive&#39;: False, &#39;MustAcknowledge&#39;: True, &#39;Priority&#39;: 50},</span>
+<span class="go">&#39;AreaEnteredID&#39;: 0, &#39;AreaExitedID&#39;: 0, &#39;AssetID&#39;: None, &#39;CardholderEntered&#39;: True,</span>
+<span class="go">&#39;CardNumber&#39;: &#39;258963&#39;, &#39;CommServerHostName&#39;: &#39;MS5&#39;, &#39;Description&#39;: &#39;Access Granted&#39;,</span>
+<span class="go">&#39;DeviceID&#39;: 2, &#39;Duress&#39;: False, &#39;ElevatorFloor&#39;: None, &#39;EventText&#39;: &#39;&#39;, &#39;ExtendedID&#39;:</span>
+<span class="go">None, &#39;FacilityCode&#39;: None, &#39;ID&#39;: 1, &#39;IsReadableCard&#39;: True, &#39;IssueCode&#39;: None,</span>
+<span class="go">&#39;PanelID&#39;: 1, &#39;SecondaryDeviceID&#39;: 0, &#39;SECURITY_DESCRIPTOR&#39;: None, &#39;SegmentID&#39;: -1,</span>
+<span class="go">&#39;SerialNumber&#39;: 1536064546, &#39;SubType&#39;: 0, &#39;Time&#39;: &#39;20180906101430.000000-240&#39;,</span>
+<span class="go">&#39;TIME_CREATED&#39;: &#39;131807168705467252&#39;, &#39;Type&#39;: 0}</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cardholders_watcher</span> <span class="o">=</span> <span class="n">dit</span><span class="o">.</span><span class="n">software_events</span><span class="p">(</span><span class="s1">&#39;Lnl_Cardholder&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">event</span> <span class="o">=</span> <span class="n">cardholders_watcher</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">{&#39;ADDR1&#39;: None, &#39;ALLOWEDVISITORS&#39;: True, &#39;BDATE&#39;: None, &#39;BUILDING&#39;: 0, &#39;CITY&#39;: None,</span>
+<span class="go">&#39;DEPT&#39;: 0, &#39;DIVISION&#39;: 0, &#39;EMAIL&#39;: None, &#39;EXT&#39;: None, &#39;FIRSTNAME&#39;: &#39;Valentina&#39;,</span>
+<span class="go">&#39;FLOOR&#39;: None, &#39;ID&#39;: 314, &#39;LASTCHANGED&#39;: &#39;20180906102317.000000-240&#39;, &#39;LASTNAME&#39;:</span>
+<span class="go">&#39;Tereshkova&#39;, &#39;LOCATION&#39;: 0, &#39;MIDNAME&#39;: None, &#39;OPHONE&#39;: None, &#39;PHONE&#39;: None,</span>
+<span class="go">&#39;SECOND_EMAIL&#39;: None, &#39;SSNO&#39;: None, &#39;STATE&#39;: None, &#39;TITLE&#39;: 0, &#39;ZIP&#39;: None,</span>
+<span class="go">&#39;previous&#39;: None}</span>
+</pre></div>
+</div>
+<dl class="data">
+<dt id="pyog.dit.HWEvent">
+<code class="descclassname">pyog.dit.</code><code class="descname">HWEvent</code><em class="property"> = 'Lnl_SecurityEvent'</em><a class="headerlink" href="#pyog.dit.HWEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Events occurring in the physical security system.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.HWAccessEvent">
+<code class="descclassname">pyog.dit.</code><code class="descname">HWAccessEvent</code><em class="property"> = 'Lnl_AccessEvent'</em><a class="headerlink" href="#pyog.dit.HWAccessEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>An event occurring due to the presentation of credentials at a reading device.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.HWFunctionEvent">
+<code class="descclassname">pyog.dit.</code><code class="descname">HWFunctionEvent</code><em class="property"> = 'Lnl_FunctionExecEvent'</em><a class="headerlink" href="#pyog.dit.HWFunctionEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>An event that consists of a function executed.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.HWStatusEvent">
+<code class="descclassname">pyog.dit.</code><code class="descname">HWStatusEvent</code><em class="property"> = 'Lnl_StatusChangeEvent'</em><a class="headerlink" href="#pyog.dit.HWStatusEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>An event that indicates a change of status on a device.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.HWOtherEvent">
+<code class="descclassname">pyog.dit.</code><code class="descname">HWOtherEvent</code><em class="property"> = 'Lnl_OtherSecurityEvent'</em><a class="headerlink" href="#pyog.dit.HWOtherEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>An event that is not card related and not access-related.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.SWOperationEvent">
+<code class="descclassname">pyog.dit.</code><code class="descname">SWOperationEvent</code><em class="property"> = '__InstanceOperationEvent'</em><a class="headerlink" href="#pyog.dit.SWOperationEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Any object operation</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.SWCreationEvent">
+<code class="descclassname">pyog.dit.</code><code class="descname">SWCreationEvent</code><em class="property"> = '__InstanceCreationEvent'</em><a class="headerlink" href="#pyog.dit.SWCreationEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object creation</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.SWModificationEvent">
+<code class="descclassname">pyog.dit.</code><code class="descname">SWModificationEvent</code><em class="property"> = '__InstanceModificationEvent'</em><a class="headerlink" href="#pyog.dit.SWModificationEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object modification</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.SWDeletionEvent">
+<code class="descclassname">pyog.dit.</code><code class="descname">SWDeletionEvent</code><em class="property"> = '__InstanceDeletionEvent'</em><a class="headerlink" href="#pyog.dit.SWDeletionEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object deletion</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyog.dit.WMIDate">
+<em class="property">class </em><code class="descclassname">pyog.dit.</code><code class="descname">WMIDate</code><a class="headerlink" href="#pyog.dit.WMIDate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+<p>Dummy class to wrap WMI date time strings.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.CIM_PYTYPES">
+<code class="descclassname">pyog.dit.</code><code class="descname">CIM_PYTYPES</code><em class="property"> = {2: &lt;class 'int'&gt;, 3: &lt;class 'int'&gt;, 4: &lt;class 'int'&gt;, 5: &lt;class 'int'&gt;, 8: &lt;class 'str'&gt;, 11: &lt;class 'bool'&gt;, 13: &lt;class 'type'&gt;, 16: &lt;class 'int'&gt;, 17: &lt;class 'int'&gt;, 18: &lt;class 'int'&gt;, 19: &lt;class 'int'&gt;, 20: &lt;class 'int'&gt;, 21: &lt;class 'int'&gt;, 101: &lt;class 'pyog.dit.WMIDate'&gt;, 102: &lt;class 'type'&gt;, 103: &lt;class 'str'&gt;}</em><a class="headerlink" href="#pyog.dit.CIM_PYTYPES" title="Permalink to this definition">¶</a></dt>
+<dd><p>CYM types mapping to Python.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyog.dit.HWStatus">
+<em class="property">class </em><code class="descclassname">pyog.dit.</code><code class="descname">HWStatus</code><a class="headerlink" href="#pyog.dit.HWStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></p>
+<p>Extended by private status classes in module, but can also be inherited for custom     status containers.</p>
+<dl class="method">
+<dt id="pyog.dit.HWStatus.decode">
+<code class="descname">decode</code><span class="sig-paren">(</span><em>status: int</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.HWStatus.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes status numerically.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> – {int} The (ORed) encoded status.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">{list{int}} Each individual status.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.PANEL_STATUS">
+<code class="descclassname">pyog.dit.</code><code class="descname">PANEL_STATUS</code><em class="property"> = {1: 'ONLINE_STATUS', 2: 'OPTIONS_MISMATCH_STATUS', 4: 'CABINET_TAMPER', 8: 'POWER_FAIL', 16: 'DOWNLOADING_FIRMWARE'}</em><a class="headerlink" href="#pyog.dit.PANEL_STATUS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.ALARM_PANEL_STATUS">
+<code class="descclassname">pyog.dit.</code><code class="descname">ALARM_PANEL_STATUS</code><em class="property"> = {1: 'ONLINE_STATUS', 2: 'OPTIONS_MISMATCH_STATUS', 4: 'CABINET_TAMPER', 8: 'POWER_FAIL'}</em><a class="headerlink" href="#pyog.dit.ALARM_PANEL_STATUS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.READER_STATUS">
+<code class="descclassname">pyog.dit.</code><code class="descname">READER_STATUS</code><em class="property"> = {1: 'RDRSTATUS_ONLINE', 2: 'RDRSTATUS_OPTION_MISTMATCH', 4: 'RDRSTATUS_CNTTAMPER', 8: 'RDRSTATUS_PWR_FAIL', 16: 'RDRSTATUS_TAMPER', 32: 'RDRSTATUS_FORCED', 64: 'RDRSTATUS_HELD ', 128: 'RDRSTATUS_AUX ', 256: 'RDRSTATUS_AUX2', 1024: 'RDRSTATUS_AUX3', 2048: 'RDRSTATUS_BIO_VERIFY', 4096: 'RDRSTATUS_DC_GND_FLT', 8192: 'RDRSTATUS_DC_SHRT_FLT', 16384: 'RDRSTATUS_DC_OPEN_FLT', 32768: 'RDRSTATUS_DC_GEN_FLT', 65536: 'RDRSTATUS_RX_GND_FLT', 131072: 'RDRSTATUS_RX_SHRT_FLT', 262144: 'RDRSTATUS_RX_OPEN_FLT', 524288: 'RDRSTATUS_RX_GEN_FLT', 1048576: 'RDRSTATUS_FIRST_CARD_UNLOCK', 2097152: 'RDRSTATUS_EXTENDED_HELD_MODE', 4194304: 'RDRSTATUS_CIPHER_MODE', 8388608: 'RDRSTATUS_LOW_BATTERY', 16777216: 'RDRSTATUS_MOTOR_STALLED', 33554432: 'RDRSTATUS_READHEAD_OFFLINE', 67108864: 'MRDT_ORDRSTATUS_MRDT_OFFLINEFFLINE', 134217728: 'RDRSTATUS_DOOR_CONTACT_OFFLINE'}</em><a class="headerlink" href="#pyog.dit.READER_STATUS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.OUTPUT_STATUS">
+<code class="descclassname">pyog.dit.</code><code class="descname">OUTPUT_STATUS</code><em class="property"> = {0: 'ALRM_STATUS_SECURE', 1: 'ALRM_STATUS_ACTIVE '}</em><a class="headerlink" href="#pyog.dit.OUTPUT_STATUS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.INPUT_STATUS">
+<code class="descclassname">pyog.dit.</code><code class="descname">INPUT_STATUS</code><em class="property"> = {0: 'ALRM_STATUS_SECURE', 1: 'ALRM_STATUS_ACTIVE ', 2: 'ALRM_STATUS_GND_FLT', 3: 'ALRM_STATUS_SHRT_FLT', 4: 'ALRM_STATUS_OPEN_FLT', 5: 'ALRM_STATUS_GEN_FLT', 256: 'ALRM_STATUS_MASKED'}</em><a class="headerlink" href="#pyog.dit.INPUT_STATUS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="pyog.dit.READER_MODE">
+<code class="descclassname">pyog.dit.</code><code class="descname">READER_MODE</code><em class="property"> = {0: 'MODE_LOCKED', 1: 'MODE_CARDONLY', 2: 'MODE_PIN_OR_CARD', 3: 'MODE_PIN_AND_CARD', 4: 'MODE_UNLOCKED', 5: 'MODE_FACCODE_ONLY', 6: 'MODE_CYPHERLOCK', 7: 'MODE_AUTOMATIC'}</em><a class="headerlink" href="#pyog.dit.READER_MODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyog.dit.decode_status">
+<code class="descclassname">pyog.dit.</code><code class="descname">decode_status</code><span class="sig-paren">(</span><em>device</em>, <em>dit_status</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.decode_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes numeric hardware status.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>device</strong> – {DITElement} The hardware device whose status will be decoded.</li>
+<li><strong>dit_status</strong> – {int} The status retrieved by DataConduIT GetHardwareStatus().</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">{list{str}} A list with descriptive string(s) for device status.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pyog.dit.COMError">
+<em class="property">exception </em><code class="descclassname">pyog.dit.</code><code class="descname">COMError</code><a class="headerlink" href="#pyog.dit.COMError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>pywintypes.com_error with added details.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pyog.dit.DITError">
+<em class="property">exception </em><code class="descclassname">pyog.dit.</code><code class="descname">DITError</code><span class="sig-paren">(</span><em>dit_err</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.DITError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyog.dit.COMError" title="pyog.dit.COMError"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyog.dit.COMError</span></code></a></p>
+<p>_wmii._wmi_object with error info from DataConduIT. See dit_error_info().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dit_err</strong> – {_wmii._wmi_object} Error info from DataConduIT.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyog.dit.DITElement">
+<em class="property">class </em><code class="descclassname">pyog.dit.</code><code class="descname">DITElement</code><span class="sig-paren">(</span><em>connection</em>, <em>lnl_class=''</em>, <em>ole_obj=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.DITElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyog._wmii._wmi_object</span></code></p>
+<p>Wrapper for DataConduIT objects, except events. Automatically handles committing.     lnl_class or ole_obj must be provided.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>connection</strong> – {DITConnection} The DataConduIT connection. It’s namespace is     extracted. _wmii._wmi.namespace is also accepted.</li>
+<li><strong>lnl_class</strong> – {str} DataConduIT class to instantiate. If specified, ole_obj     parameter will be disregarded.</li>
+<li><strong>ole_obj</strong> – {ISWbemObject} OLE object.</li>
+<li><strong>kwargs</strong> – Named properties to be set upon initialization.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyog.dit.DITElement.set">
+<code class="descname">set</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.DITElement.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets properties in batch.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>kwargs</strong> – Named properties and values.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyog.dit.DITElement.wmi_class">
+<code class="descname">wmi_class</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.DITElement.wmi_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>The DataConduIT class of the wrapped object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">{str} The wrapped object class.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyog.dit.HWatcher">
+<em class="property">class </em><code class="descclassname">pyog.dit.</code><code class="descname">HWatcher</code><span class="sig-paren">(</span><em>connection</em>, <em>EventClass</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.HWatcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyog.dit._DITWatcher</span></code></p>
+<p>Watches for hardware events and delivers them as a dictionary when called.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>connection</strong> – {_wmii._wmi_namespace} DataConduIT namespace connection.</li>
+<li><strong>EventClass</strong> – {str} The name of the hardware event class to watch for.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>DataConduIT hardware events hierarchy:</p>
+<ul>
+<li><p class="first">Lnl_Event(__ExtrinsicEvent) &gt;</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Lnl_SecurityEvent &gt;</p>
+<blockquote>
+<div><ul class="simple">
+<li>Lnl_AccessEvent</li>
+<li>Lnl_FireEvent</li>
+<li>Lnl_FunctionExecEvent</li>
+<li>Lnl_IntercomEvent</li>
+<li>Lnl_OtherSecurityEvent</li>
+<li>Lnl_StatusChangeEvent</li>
+<li>Lnl_TransmitterEvent</li>
+<li>Lnl_VideoEvent</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyog.dit.SWatcher">
+<em class="property">class </em><code class="descclassname">pyog.dit.</code><code class="descname">SWatcher</code><span class="sig-paren">(</span><em>connection</em>, <em>TargetCls</em>, <em>operation</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.SWatcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyog.dit._DITWatcher</span></code></p>
+<p>Watches for software events and delivers them as a dictionary when called.</p>
+<p>The following classes are supported for software event registration:
+Lnl_Cardholder, Lnl_Visitor, Lnl_Badge, and Lnl_Account (Directory accounts linked
+to Cardholder).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>connection</strong> – {_wmii._wmi_namespace} DataConduIT namespace connection.</li>
+<li><strong>SWClass</strong> – {str} The name of software class to watch changes for.</li>
+<li><strong>operation</strong> – The operation type class to watch for: __InstanceOperationEvent or    child.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>WMI software event operation hierarchy:</p>
+<ul>
+<li><p class="first">__InstanceOperationEvent &gt;</p>
+<blockquote>
+<div><ul class="simple">
+<li>__InstanceCreationEvent</li>
+<li>__InstanceModificationEvent</li>
+<li>__InstanceDeletionEvent</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<dl class="attribute">
+<dt id="pyog.dit.SWatcher.targets">
+<code class="descname">targets</code><em class="property"> = ('lnl_cardholder', 'lnl_visitor', 'lnl_badge', 'lnl_account')</em><a class="headerlink" href="#pyog.dit.SWatcher.targets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyog.dit.DITConnection">
+<em class="property">class </em><code class="descclassname">pyog.dit.</code><code class="descname">DITConnection</code><span class="sig-paren">(</span><em>dit_namespace: pyog._wmii._wmi_namespace</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.DITConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>OnGuard WMI namespace connection manager. Can be instantiated directly but use
+DIT() for convenience.</p>
+<dl class="attribute">
+<dt id="pyog.dit.DITConnection.namespace">
+<code class="descname">namespace</code><a class="headerlink" href="#pyog.dit.DITConnection.namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>The raw wmi namespace connection.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">{wmi._wmi_namespace} The raw WMI namespace connection.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyog.dit.DITConnection.data_query">
+<code class="descname">data_query</code><span class="sig-paren">(</span><em>wql: str</em><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#pyog.dit.DITConnection.data_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs a WQL data query (as opposed to an event or schema query).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wql</strong> – {str} The query.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">{list{tuple}} If queried for “*” a list of tuples with DITElements,        otherwise a list of tuples with the specified properties.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyog.dit.DITConnection.open_door">
+<code class="descname">open_door</code><span class="sig-paren">(</span><em>panel</em>, <em>reader</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.DITConnection.open_door" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pulses reader open.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>panel</strong> – {str} Panel name upstream the reader.</li>
+<li><strong>reader</strong> – {str} Reader name.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyog.dit.DITConnection.hardware_events">
+<code class="descname">hardware_events</code><span class="sig-paren">(</span><em>EventClass='Lnl_SecurityEvent'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.DITConnection.hardware_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates hardware event subscription for the given event class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>EventClass</strong> – {str} The hardware event class.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">{HWatcher} The hardware event watcher.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyog.dit.DITConnection.software_events">
+<code class="descname">software_events</code><span class="sig-paren">(</span><em>TargetCls</em>, <em>operation='__InstanceOperationEvent'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.DITConnection.software_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates software event subscription for the given event class and operation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>TargetCls</strong> – {str} The software event class.</li>
+<li><strong>operation</strong> – {str} The operation type. __InstanceOperationEvent or child.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">{SWatcher} The software event watcher.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyog.dit.DITConnection.send_access_granted">
+<code class="descname">send_access_granted</code><span class="sig-paren">(</span><em>panel</em>, <em>reader</em>, <em>badge_id=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.DITConnection.send_access_granted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access granted.</p>
+<p>If sent for a logical panel, reader is optional. Reader must be specified if         sending for physical panel.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>panel</strong> – {str} Panel name.</li>
+<li><strong>reader</strong> – {str} Reader name.</li>
+<li><strong>badge_id</strong> – {int} Badge number. Default sends no badge.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyog.dit.DITConnection.send_access_denied">
+<code class="descname">send_access_denied</code><span class="sig-paren">(</span><em>panel</em>, <em>reader</em>, <em>badge_id=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.DITConnection.send_access_denied" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access denied.</p>
+<p>If sent for a logical panel, reader is optional. Reader must be specified if
+sending for physical panel.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>panel</strong> – {str} Panel name.</li>
+<li><strong>reader</strong> – {str} Reader name.</li>
+<li><strong>badge_id</strong> – {int} Badge number. Default sends no badge.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyog.dit.DITConnection.send_event">
+<code class="descname">send_event</code><span class="sig-paren">(</span><em>description</em>, <em>source</em>, <em>device=''</em>, <em>subdevice=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyog.dit.DITConnection.send_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends logical appliance event.</p>
+<p>Only logical appliances are supported. Source, device and subdevice form a
+hierarchy so the parent must be specified in order for its child to be found.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>description</strong> – {str} Event description.</li>
+<li><strong>source</strong> – {str} Source name.</li>
+<li><strong>device</strong> – {str} Device name.</li>
+<li><strong>subdevice</strong> – {str} Subdevice name.</li>
+<li><strong>kwargs</strong> – See the DataConduIT Guide for supported named arguments.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyog.dit.DIT">
+<code class="descclassname">pyog.dit.</code><code class="descname">DIT</code><span class="sig-paren">(</span><em>server='.'</em>, <em>username=''</em>, <em>password=''</em>, <em>coinitialize=False</em><span class="sig-paren">)</span> &#x2192; pyog.dit.DITConnection<a class="headerlink" href="#pyog.dit.DIT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a connection manager to OnGuard namespace.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>server</strong> – {str} Hostname (IP can cause problems).</li>
+<li><strong>username</strong> – {str} Username.</li>
+<li><strong>password</strong> – {str} User password.</li>
+<li><strong>coinitialize</strong> – {bool} Initializes the COM libraries for the current thread.     Use when connection is not made from the main thread. Note that COM objects can only</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>be edited in the thread where they were created or acquired.
+:return: {_wmii._wmi_namespace} The connection instance.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyog.dit.dit_error_info">
+<code class="descclassname">pyog.dit.</code><code class="descname">dit_error_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; pyog._wmii._wmi_object<a class="headerlink" href="#pyog.dit.dit_error_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves information for last DataConduIT error.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">{_wmii._wmi_object} SWbemLastError child with DataConduIT error information.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyog.dit.handle_error">
+<code class="descclassname">pyog.dit.</code><code class="descname">handle_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#pyog.dit.handle_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception handler that extracts exception information from DataConduIT.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="#pyog.dit.DITError" title="pyog.dit.DITError"><strong>DITError</strong></a> – If DataConduIT has error information.</li>
+<li><a class="reference internal" href="#pyog.dit.COMError" title="pyog.dit.COMError"><strong>COMError</strong></a> – If DataConduIT doesn’t have error information.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyog package</a><ul>
+<li><a class="reference internal" href="#module-pyog.dit">pyog.dit module</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/pyog.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pyog  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Michel Salazar-Garcia, License: MIT.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.8.
+    </div>
+  </body>
+</html>
