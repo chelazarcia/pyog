@@ -67,7 +67,7 @@ from re import compile, search
 from pythoncom import CoInitialize
 from sys import exc_info
 from functools import partial
-from collections import OrderedDict
+from collections import OrderedDict, UserString
 
 
 # Hardware event classes.
@@ -96,7 +96,7 @@ SWDeletionEvent = "__InstanceDeletionEvent"
 _COMI_ERROR = (com_error, _wmii.x_wmi)
 
 
-class WMIDate(str):
+class WMIDate(UserString):
     """
     Dummy class to wrap WMI date time strings.
     """
