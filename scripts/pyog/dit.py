@@ -100,7 +100,6 @@ class WMIDate(UserString):
     """
     Dummy class to wrap WMI date time strings.
     """
-    pass
 
 
 # WMI types mapping to python types.
@@ -121,7 +120,7 @@ CIM_PYTYPES = {
     19: int,
     20: int,
     21: int,
-    101: WMIDate,  # str,
+    101: WMIDate,  # UserString,
     102: type,
     103: str
 }
@@ -817,7 +816,7 @@ def handle_error() -> None:
     :raises COMError: If DataConduIT doesn't have error information.
     """
     err = dit_error_info()  # See if DataConduIT returned error info.
-    if err:
+    if err is not None:
         cls = partial(DITError, err)
     else:
         # DataConduIT did not return error info.
