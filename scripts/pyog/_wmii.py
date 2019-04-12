@@ -414,19 +414,20 @@ class _wmi_method:
         the out and return parameters.
         """
         try:
+            in_parameters = self.method.InParameters
             if self.in_parameters:
                 parameter_names = {}
                 for name, is_array in self.in_parameter_names:
                     parameter_names[name] = is_array
 
-                parameters = self.in_parameters
+                # parameters = self.in_parameters
 
                 #
                 # Check positional parameters first
                 #
                 for n_arg in range(len(args)):
                     arg = args[n_arg]
-                    parameter = parameters.Properties_[n_arg]
+                    parameter = in_parameters.Properties_[n_arg]
                     if parameter.IsArray:
                         try:
                             list(arg)
@@ -449,10 +450,10 @@ class _wmi_method:
                                 list(v)
                             except TypeError:
                                 raise TypeError("%s must be iterable" % k)
-                    parameters.Properties_(k).Value = v
+                    in_parameters.Properties_(k).Value = v
 
                 result = self.ole_object.ExecMethod_(self.method.Name,
-                                                     self.in_parameters)
+                                                     in_parameters)
             else:
                 result = self.ole_object.ExecMethod_(self.method.Name)
 
