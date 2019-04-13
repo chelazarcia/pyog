@@ -414,13 +414,13 @@ class _wmi_method:
         the out and return parameters.
         """
         try:
+            # Resolve in_parameters again as local variable to avoid using
+            # self.in_parameters because the property would keep values between calls.
             in_parameters = self.method.InParameters
             if self.in_parameters:
                 parameter_names = {}
                 for name, is_array in self.in_parameter_names:
                     parameter_names[name] = is_array
-
-                # parameters = self.in_parameters
 
                 #
                 # Check positional parameters first
